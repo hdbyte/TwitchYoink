@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    :root {
+      --bg: #0e0e10;
+      --panel: #18181b;
+      --hover: #26262c;
+      --text-main: #efeff1;
+      --text-dim: #adadb8;
+      --twitch: #9147ff;
+    }
+    body {
+      width: 260px;
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      margin: 0;
+      padding: 16px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .header h2 { font-size: 16px; margin: 0; font-weight: 600; }
+    
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .filter-card {
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 4px;
+      margin-bottom: 16px;
+    }
+
+    .option {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .option:hover { background: var(--hover); }
+    .option span { font-size: 13px; font-weight: 500; }
+
+    /* Modern Toggle */
+    .switch {
+      position: relative;
+      width: 34px;
+      height: 18px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #3f3f46;
+      transition: .2s;
+      border-radius: 20px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 12px; width: 12px;
+      left: 3px; bottom: 3px;
+      background-color: white;
+      transition: .2s;
+      border-radius: 50%;
+    }
+    input:checked + .slider { background-color: var(--twitch); }
+    input:checked + .slider:before { transform: translateX(16px); }
+
+    .footer {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .footer-link {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--text-main); }
+
+    .btn-donate {
+      background: #ffdd00;
+      color: #000;
+      text-align: center;
+      padding: 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
+      text-decoration: none;
+      margin-top: 4px;
+      transition: transform 0.1s;
+    }
+    .btn-donate:active { transform: scale(0.97); }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div style="width: 24px; height: 24px; background: var(--twitch); border-radius: 4px;"></div>
+    <h2>Twitch Yo Hider</h2>
+  </div>
+
+  <div class="section-label">Active Filters</div>
+  <div class="filter-card">
+    <div class="option">
+      <span>Hide "yo"</span>
+      <label class="switch">
+        <input type="checkbox" id="hideYo">
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="option">
+      <span>Hide "nothing"</span>
+      <label class="switch">
+        <input type="checkbox" id="hideNothing">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="section-label">Support</div>
+  <div class="footer">
+    Made by AmazingToilet<a href="https://HDByte.com" target="_blank" class="footer-link">
+      HDByte.com
+    </a>
+    <a href="https://www.buymeacoffee.com/plunger" target="_blank" class="btn-donate">
+      Buy Me a Coffee
+    </a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
