@@ -2,10 +2,14 @@
   "manifest_version": 3,
   "name": "Twitch Yoink",
   "version": "1.0",
+  "description": "This extension hides 'yo' and 'nothing' messages in Twitch chat.",
   "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "logo.png"
+  },
+  "background": {
+    "service_worker": "background.js"
   },
   "icons": {
     "128": "logo.png"

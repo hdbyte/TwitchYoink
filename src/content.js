@@ -4,8 +4,8 @@ let settings = { hideYo: true, hideNothing: true };
 // Sync settings from storage
 const updateSettings = () => {
   chrome.storage.local.get(['hideYo', 'hideNothing'], (res) => {
-    settings.hideYo = res.hideYo !== false;
-    settings.hideNothing = !!res.hideNothing;
+    settings.hideYo = res.hideYo;
+    settings.hideNothing = res.hideNothing;
   });
 };
 
@@ -29,7 +29,7 @@ const hideMessages = () => {
         shouldHide = true;
       }
 
-      // Check for literal 'nothing'
+      // Check for 'nothing'
       if (settings.hideNothing && content === 'nothing') {
         shouldHide = true;
       }
@@ -38,7 +38,7 @@ const hideMessages = () => {
         container.style.display = 'none';
         container.dataset.yoHidden = 'true';
         hiddenCount++;
-        console.log(`Hidden "${content}". Total hidden: ${hiddenCount}`);
+        // console.log(`Hidden "${content}". Total hidden: ${hiddenCount}`);
       }
     }
   });
