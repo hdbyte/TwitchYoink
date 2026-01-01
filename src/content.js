@@ -16,7 +16,7 @@ const hideMessages = () => {
     // Skip if already hidden or tagged
     if (container.style.display === 'none' || container.dataset.yoHidden === 'true') return;
 
-    const messageBody = container.querySelector('.seventv-user-message');
+    const messageBody = container.querySelector('.seventv-chat-message-body');
     if (messageBody) {
       const textToken = messageBody.querySelector('.text-token');
       // Get the text inside .text-token or the body itself
@@ -30,7 +30,8 @@ const hideMessages = () => {
       }
 
       // Check for 'nothing'
-      if (settings.hideNothing && content === 'nothing') {
+      const nothingEmote = messageBody.querySelector('img[alt="nothing"]');
+      if ((settings.hideNothing && content === 'nothing') || nothingEmote) {
         shouldHide = true;
       }
 
@@ -38,7 +39,7 @@ const hideMessages = () => {
         container.style.display = 'none';
         container.dataset.yoHidden = 'true';
         hiddenCount++;
-        // console.log(`Hidden "${content}". Total hidden: ${hiddenCount}`);
+        //console.log(`Hidden "${content}". Total hidden: ${hiddenCount}`);
       }
     }
   });
