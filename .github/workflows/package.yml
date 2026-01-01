@@ -1,35 +1,41 @@
-name: Package Source
+name: Attach Zip to Release
 
 on:
-  push:
-    tags:
-      - 'v*' # Triggers when you push a tag like v1.0.0
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'The tag of the release to attach the zip to'
+        required: true
 
 jobs:
-  build:
+  upload:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Prepare Directory and Zip
+      - name: Package Source
         run: |
-          # Get the version from the tag (e.g., 1.0.0)
-          VERSION=${GITHUB_REF_NAME#v}
+          # Use the input tag if manual, otherwise use the release tag
+          TAG="${{ github.event.inputs.tag_name || github.event.release.tag_name }}"
+          VERSION="${TAG#v}"
+          ZIP_NAME="TwinkYoink_v${VERSION}.zip"
           
-          # Create a temporary staging directory
           mkdir -p staging/TwitchYoink
-          
-          # Copy source contents into the named subdirectory
           cp -r src/* staging/TwitchYoink/
-          
-          # Zip the contents of the staging folder
           cd staging
-          zip -r ../TwitchYoink_v${VERSION}.zip .
+          zip -r "../$ZIP_NAME" .
           cd ..
+          
+          echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
+          echo "TARGET_TAG=$TAG" >> $GITHUB_ENV
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: TwitchYoink-Release
-          path: TwitchYoink_v*.zip
+      - name: Upload to Release
+        run: |
+          gh release upload "$TARGET_TAG" "$ZIP_NAME" --clobber
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
