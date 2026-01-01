@@ -1,0 +1,35 @@
+name: Package Source
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggers when you push a tag like v1.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Prepare Directory and Zip
+        run: |
+          # Get the version from the tag (e.g., 1.0.0)
+          VERSION=${GITHUB_REF_NAME#v}
+          
+          # Create a temporary staging directory
+          mkdir -p staging/TwitchYoink
+          
+          # Copy source contents into the named subdirectory
+          cp -r src/* staging/TwitchYoink/
+          
+          # Zip the contents of the staging folder
+          cd staging
+          zip -r ../TwitchYoink_v${VERSION}.zip .
+          cd ..
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TwitchYoink-Release
+          path: TwitchYoink_v*.zip
