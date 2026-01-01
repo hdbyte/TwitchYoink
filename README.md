@@ -13,7 +13,7 @@
 
 Since Twitch Yoink is currently in developer mode, follow these steps to get started:
 
-1. **Download** this repository as a ZIP and extract it.
+1. **Download** the latest .zip file from the Releases and extract it.
 2. Open Chrome and navigate to `chrome://extensions/`.
 3. Toggle **Developer Mode** (top right corner) to **ON**.
 4. Click **Load unpacked** and select the folder where you extracted the files.
