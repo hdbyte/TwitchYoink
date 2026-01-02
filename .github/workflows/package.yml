@@ -20,23 +20,20 @@ jobs:
 
       - name: Package Source
         run: |
-          # Use the input tag if manual, otherwise use the release tag
           TAG="${{ github.event.inputs.tag_name || github.event.release.tag_name }}"
           VERSION="${TAG#v}"
-          ZIP_NAME="TwinkYoink_v${VERSION}.zip"
+          ZIP_NAME="TwitchYoink_v${VERSION}.zip"
           
-          mkdir -p staging/TwitchYoink
-          cp -r src/* staging/TwitchYoink/
-          cd staging
-          cd TwitchYoink
-          zip -r "../$ZIP_NAME" .
-          cd ..
+          # This command enters src, zips its content, and places the zip in the root
+          (cd src && zip -r "../$ZIP_NAME" .)
           
+          # Save variables for the next step
           echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
           echo "TARGET_TAG=$TAG" >> $GITHUB_ENV
 
       - name: Upload to Release
         run: |
+          # Use the environment variables we just saved
           gh release upload "$TARGET_TAG" "$ZIP_NAME" --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
