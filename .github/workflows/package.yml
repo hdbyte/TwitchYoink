@@ -28,6 +28,7 @@ jobs:
           mkdir -p staging/TwitchYoink
           cp -r src/* staging/TwitchYoink/
           cd staging
+          cd TwitchYoink
           zip -r "../$ZIP_NAME" .
           cd ..
           
