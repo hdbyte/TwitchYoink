@@ -1,14 +1,20 @@
-chrome.runtime.onInstalled.addListener(() => {
+const api = typeof browser !== "undefined" ? browser : chrome;
+
+api.runtime.onInstalled.addListener(() => {
   const defaults = {
     hideYo: true,
     hideNothing: false
   };
 
-  chrome.storage.local.get(Object.keys(defaults), (result) => {
-    // Check if keys are missing
-    if (Object.keys(result).length < Object.keys(defaults).length) {
-      chrome.storage.local.set(defaults, () => {
-        console.log("Default settings have been applied.");
+  api.storage.local.get(Object.keys(defaults), (result) => {
+    const missingKeys = Object.keys(defaults).filter(key => !(key in result));
+    
+    if (missingKeys.length > 0) {
+      const toSet = {};
+      missingKeys.forEach(key => toSet[key] = defaults[key]);
+      
+      api.storage.local.set(toSet, () => {
+        console.log("Missing default settings have been applied.");
       });
     }
   });
