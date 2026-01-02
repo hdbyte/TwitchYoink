@@ -1,13 +1,13 @@
 # Twitch Yoink
 
-**Twitch Yoink** is a Chrome extension designed to "yoink" the "yo" and "nothing" clutter out of your Twitch experience. Currently only works when 7TV extension is enabled.
+**Twitch Yoink** is a browser extension designed to "yoink" the "yo" and "nothing" clutter out of your Twitch experience.
 
 ## Features
 
 * **Yoink "yo":** Automatically hides messages that consist solely of the word "yo".
 * **Yoink "nothing":**  Automatically hides messages that consist solely of the word "nothing".
 * **Performance First:** Built with a light footprint to ensure your chat stream never lags.
-* **7TV Ready:** Custom coded to work when 7TV extension is enabled.
+* **7TV Ready:** Even works when the 7TV extension is enabled.
 
 ## Installation
 
@@ -18,7 +18,8 @@ You can install Twitch Yoink directly from the Chrome Web Store:
 
 ### Firefox
 
-Firefox support is coming soon. In the meantime, you can install the extension manually using the instructions below.
+You can install Twitch Yoink from Mozilla:
+[**Add to Firefox**](https://addons.mozilla.org/en-US/firefox/addon/twitch-yoink/)
 
 
 ## Manual Installation
