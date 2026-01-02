@@ -11,37 +11,47 @@ const updateSettings = () => {
 };
 
 const hideMessages = () => {
-  // Twitch/7TV chat messages
-  const containers = document.querySelectorAll('.seventv-chat-message-container');
+  // 7TV Extension Chat Messages
+  const messages = document.querySelectorAll('.seventv-message:not([data-yo-checked])');
 
-  containers.forEach((container) => {
-    if (container.style.display === 'none' || container.dataset.yoHidden === 'true') return;
+  messages.forEach((msg) => {
+    msg.dataset.yoChecked = 'true';
 
-    const messageBody = container.querySelector('.seventv-chat-message-body');
-    if (messageBody) {
-      const textToken = messageBody.querySelector('.text-token');
-      const content = (textToken || messageBody).textContent.trim().toLowerCase();
-      
-      let shouldHide = false;
+    const messageBody = msg.querySelector('.seventv-chat-message-body');
+    if (!messageBody) return;
 
-      // Logic for 'yo'
-      if (settings.hideYo && content === 'yo') {
-        shouldHide = true;
-      }
+    const content = messageBody.textContent.trim().toLowerCase();
+    const nothingEmote = messageBody.querySelector('img[alt="nothing"]');
 
-      // Logic for 'nothing' text or the 7TV emote for 'nothing'
-      const nothingEmote = messageBody.querySelector('img[alt="nothing"]');
-      if (settings.hideNothing) {
-        if (content === 'nothing' || nothingEmote) {
-          shouldHide = true;
-        }
-      }
+    let shouldHide = false;
+    if (settings.hideYo && content === 'yo') shouldHide = true;
+    if (settings.hideNothing && (content === 'nothing' || nothingEmote)) shouldHide = true;
 
-      if (shouldHide) {
-        container.style.display = 'none';
-        container.dataset.yoHidden = 'true';
-        hiddenCount++;
-      }
+    if (shouldHide) {
+      hiddenCount++;
+      msg.style.display = 'none';
+      msg.dataset.yoHidden = 'true';
+    }
+  });
+
+  // Native Twitch Chat Messages
+  const messages2 = document.querySelectorAll('.chat-line__message:not([data-yo-checked])');
+
+  messages2.forEach((msg) => {
+    msg.dataset.yoChecked = 'true';
+
+    const messageBody = msg.querySelector('span[data-a-target="chat-message-text"]');
+    if (!messageBody) return;
+
+    const content = messageBody.textContent.trim().toLowerCase();
+
+    let shouldHide = false;
+    if (settings.hideYo && content === 'yo') shouldHide = true;
+    if (settings.hideNothing && content === 'nothing') shouldHide = true;
+    if (shouldHide) {
+      hiddenCount++;
+      msg.style.display = 'none';
+      msg.dataset.yoHidden = 'true';
     }
   });
 };
