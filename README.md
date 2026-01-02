@@ -37,10 +37,10 @@ Follow these steps to manually install the extension:
 ### Firefox
 
 1. Go to the [Releases](https://github.com/hdbyte/TwitchYoink/releases) page.
-2. **Download** the latest `.zip` file and extract it.
+2. **Download** the latest `.zip` file.
 3. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
 4. Click **Load Temporary Add-on...**.
-5. Navigate to the extracted folder and select the `manifest.json` file.
+5. Navigate to the downloaded zip file and select it.
 6. Refresh Twitch and start yoinking!
 
 
