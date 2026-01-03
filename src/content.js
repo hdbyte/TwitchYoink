@@ -20,11 +20,12 @@ const hideMessages = () => {
     const messageBody = msg.querySelector('.seventv-chat-message-body');
     if (!messageBody) return;
 
-    const content = messageBody.textContent.trim().toLowerCase();
+    const content = messageBody.textContent.replace(/\u034F/g, '').trim().toLowerCase();
     const nothingEmote = messageBody.querySelector('img[alt="nothing"]');
+    const yoEmote = messageBody.querySelector('img[alt="YO"]');
 
     let shouldHide = false;
-    if (settings.hideYo && content === 'yo') shouldHide = true;
+    if (settings.hideYo && (content === 'yo' || yoEmote)) shouldHide = true;
     if (settings.hideNothing && (content === 'nothing' || nothingEmote)) shouldHide = true;
 
     if (shouldHide) {
