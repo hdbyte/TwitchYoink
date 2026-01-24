@@ -3,7 +3,8 @@ const api = typeof browser !== "undefined" ? browser : chrome;
 api.runtime.onInstalled.addListener(() => {
   const defaults = {
     hideYo: true,
-    hideNothing: false
+    hideNothing: false,
+    hideShuffle: true
   };
 
   api.storage.local.get(Object.keys(defaults), (result) => {

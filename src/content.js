@@ -1,12 +1,13 @@
 let hiddenCount = 0;
-let settings = { hideYo: true, hideNothing: true };
+let settings = { hideYo: true, hideNothing: true, hideShuffle: true };
 
 const api = typeof browser !== "undefined" ? browser : chrome;
 
 const updateSettings = () => {
-  api.storage.local.get(['hideYo', 'hideNothing'], (res) => {
+  api.storage.local.get(['hideYo', 'hideNothing', 'hideShuffle'], (res) => {
     if (res.hideYo !== undefined) settings.hideYo = res.hideYo;
     if (res.hideNothing !== undefined) settings.hideNothing = res.hideNothing;
+    if (res.hideShuffle !== undefined) settings.hideShuffle = res.hideShuffle;
   });
 };
 
@@ -27,6 +28,7 @@ const hideMessages = () => {
     let shouldHide = false;
     if (settings.hideYo && (content === 'yo' || yoEmote)) shouldHide = true;
     if (settings.hideNothing && (content === 'nothing' || nothingEmote)) shouldHide = true;
+    if (settings.hideShuffle && content === 'shuffle') shouldHide = true;
 
     if (shouldHide) {
       hiddenCount++;
@@ -49,6 +51,7 @@ const hideMessages = () => {
     let shouldHide = false;
     if (settings.hideYo && content === 'yo') shouldHide = true;
     if (settings.hideNothing && content === 'nothing') shouldHide = true;
+    if (settings.hideShuffle && content === 'shuffle') shouldHide = true;
     if (shouldHide) {
       hiddenCount++;
       msg.style.display = 'none';
