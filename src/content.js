@@ -23,7 +23,7 @@ const hideMessages = () => {
 
     const content = messageBody.textContent.replace(/\u034F/g, '').trim().toLowerCase();
     const nothingEmote = messageBody.querySelector('img[alt="nothing"]');
-    const yoEmote = messageBody.querySelector('img[alt="YO"]');
+    const yoEmote = messageBody.querySelector('img[alt="YO" i]');
 
     let shouldHide = false;
     if (settings.hideYo && (content === 'yo' || yoEmote)) shouldHide = true;
