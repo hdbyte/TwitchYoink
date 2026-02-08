@@ -14,7 +14,7 @@ const updateSettings = () => {
 function isOnlyEmote(messageElement, emoteAltText) {
     if (!messageElement) return false;
 
-    const textContent = messageElement.textContent.trim();
+    const textContent = messageElement.textContent.replace(/\u034F/g, '').trim().toLowerCase();
     const emotes = messageElement.querySelectorAll('.seventv-chat-emote');
 
     const isSingleEmote = emotes.length === 1 && textContent === "";
