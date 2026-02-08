@@ -11,6 +11,20 @@ const updateSettings = () => {
   });
 };
 
+function isOnlyEmote(messageElement, emoteAltText) {
+    if (!messageElement) return false;
+
+    const textContent = messageElement.textContent.trim();
+    const emotes = messageElement.querySelectorAll('.seventv-chat-emote');
+
+    const isSingleEmote = emotes.length === 1 && textContent === "";
+
+    const currentEmoteAlt = emotes[0]?.getAttribute('alt')?.toLowerCase();
+    const targetAlt = emoteAltText.toLowerCase();
+
+    return isSingleEmote && currentEmoteAlt === targetAlt;
+}
+
 const hideMessages = () => {
   // 7TV Extension Chat Messages
   const messages = document.querySelectorAll('.seventv-message:not([data-yo-checked])');
@@ -22,13 +36,11 @@ const hideMessages = () => {
     if (!messageBody) return;
 
     const content = messageBody.textContent.replace(/\u034F/g, '').trim().toLowerCase();
-    const nothingEmote = messageBody.querySelector('img[alt="nothing"]');
-    const yoEmote = messageBody.querySelector('img[alt="YO" i]');
 
     let shouldHide = false;
-    if (settings.hideYo && (content === 'yo' || yoEmote)) shouldHide = true;
-    if (settings.hideNothing && (content === 'nothing' || nothingEmote)) shouldHide = true;
-    if (settings.hideShuffle && content === 'shuffle') shouldHide = true;
+    if (settings.hideYo && (content === 'yo' || isOnlyEmote(messageBody, 'yo'))) shouldHide = true;
+    if (settings.hideNothing && (content === 'nothing' || isOnlyEmote(messageBody, 'nothing'))) shouldHide = true;
+    if (settings.hideShuffle && (content === 'shuffle' || isOnlyEmote(messageBody, 'shuffle'))) shouldHide = true;
 
     if (shouldHide) {
       hiddenCount++;
